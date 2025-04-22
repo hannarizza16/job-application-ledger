@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+button {
+    @apply text-green-800 border rounded-lg mt-3 font-semibold cursor-pointer;
+}
+
+.formContainer {
+    @apply flex flex-col w-full shadow-md bg-white p-4
+}
+
+textarea {
+    background-color: #f4f2ee ;
+    border: 0.5px solid black;
+    padding: 0.5em;
+    height: 100vh;
+}
+
+input{
+    border-radius: 5px;
+    border: 0.5px solid black;
+    padding: 5px;
+    margin-bottom: 1em ;
+    font-size: 1em;
+    font-weight: 500; 
+    font-family: inherit;
+    background-color: #f9f9f9;
+    cursor: text;
+}
+
+option {
+    @apply focus:bg-green-300
+}
+
+input:hover {
+    @apply bg-green-100 text-green-800 border-green-800
+}
+
+input:current {
+    @apply border-green-800
+}
