@@ -25,6 +25,7 @@ export default function Status({applications}) {
                 {statuses.map((status) => (
                     <div key={status}>
                         {statusCounts[status] || 0} {status}
+                        {/* checks if that specfic status is meron, if wla 0 */}
                     </div>
                 ))}
             

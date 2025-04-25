@@ -15,6 +15,7 @@ function App() {
     <>
     <div className='flex h-screen'>
       <Sidebar> {/*this is whre you sidebar wraps the sidebarItem */}
+        {/* and this is the Children being passed in sidebar */}
         <SideBarItem to="/input" text="Input" icon={<TextCursorInput size={20}/>}/>
         <SideBarItem to="/lists" text="List" icon={<List size={20}/>}/>
         <SideBarItem to="/archived" text="Archived" icon={<Archive size={20}/>}/>
