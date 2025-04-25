@@ -1,4 +1,4 @@
-import Status from './Status';
+import Status from '../components/Status';
 import './Input.css'
 
 import { useEffect, useReducer, useState} from "react"
@@ -50,6 +50,7 @@ function applicationReducer(state, action) {
             }
             
             //pag ka add 
+
             const newApplication = {
                 id: Date.now(),
                 ...state.formData
@@ -80,13 +81,8 @@ export default function Input() {
         setShowSuccess(true);
         setTimeout(() => setShowSuccess(false), 3000);
     }
-
-    useEffect(() => {
-        if(state.applications > 0){
-            localStorage.setItem('applications', JSON.stringify(state.applications))
-        }
-    })
     
+
 
     const statusOptions = [
         "Applied",
@@ -123,10 +119,11 @@ export default function Input() {
                             Add Application
                             {
                                 showSuccess && (
-                                    <div className="success-message animate-fade-in-out">
+                                    <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-4 animate-fade-in-out mt-2">
                                         ✅ New application added successfully!
                                     </div>
-                                )}
+                                )
+                            }
                         </button>
                     </form>
                 </div>

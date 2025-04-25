@@ -20,7 +20,7 @@ export default function Sidebar({children}) {  // SidebarProvider meron siyang c
                 </div>
 
                 <SidebarContext.Provider value={{ expanded }}>
-                    <ul className="flex-1 px-3"> {children}</ul>
+                    {children}
                 </SidebarContext.Provider>
 
             </nav>

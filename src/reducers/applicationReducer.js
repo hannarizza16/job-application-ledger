@@ -15,8 +15,6 @@ export const initialState = {
     applications: []
 }
 
-
-
 export function applicationReducer(state, action) {
     switch (action.type) {
         case 'SET_INPUT_FIELD':
@@ -36,14 +34,11 @@ export function applicationReducer(state, action) {
                     status: "",
                     date: getTodaysDate(),
                     note: "",
-                    isArchive: false
+                    isArchive: false     
                 }
             }
         case 'SET_ADD_APPLICATIONS':
             const {company, position, status, date, note} = state.formData;
-            // const requiredFields = ['company', 'position', 'status', 'date', 'note'];
-            // const hasEmptyField = requiredFields.some(field => !state.formData[field]);
-
             if (!company || !position || !status || !date || !note) {
                 alert ("Please fill out all fields")
                 return state
@@ -64,16 +59,18 @@ export function applicationReducer(state, action) {
                 applications: action.data
             }
         case 'DELETE_APPLICATION':
+            const updatedApplications = state.applications.filter((app) => app.id !== action.id)
+            localStorage.setItem("applications", JSON.stringify(updatedApplications))
             return {
                 ...state,
-                applications: state.applications.filter((app) => app.id !== action.id)
+                applications: updatedApplications
             }
         case 'ARCHIVE_APPLICATION':
+            const archiveApplication = state.applications.map((app) => app.id === action.id ? { ...app, isArchive: true } : app )
+            localStorage.setItem("applications", JSON.stringify(archiveApplication))
             return {
                 ...state,
-                applications: state.applications.map((app) =>
-                    app.id === action.id ? { ...app, isArchive: true } : app
-                )
+                applications: archiveApplication
             }
         default:
             return state

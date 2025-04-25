@@ -1,7 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useContext, useState } from "react";
+import { ApplicationContext } from "../context/ApplicationContext";
+import { ACTION_TYPES } from "../action-types/actionTypes";
+
 
 export default function Archive() {
-    const [applications, setApplications] = useState([]);
+    // const [applications, setApplications] = useState([]);
+    const { state, dispatch } = useContext(ApplicationContext)
+    const {applications} = state
 
     const toTitleCase = (str) => {
         return str
@@ -11,23 +16,27 @@ export default function Archive() {
             .join(' ');
     };
     
+    useEffect(() => {
+        const savedApplications = localStorage.getItem("applications");
+        if (savedApplications && applications.length === 0) {
+            dispatch({
+                type: ACTION_TYPES.LOAD_APPLICATIONS,
+                data: JSON.parse(savedApplications),
+            });
+        }
+    }, [dispatch]);
 
     useEffect(() => {
-        try {
-            const savedApplications = localStorage.getItem("applications");
-            if (savedApplications) {
-                setApplications(JSON.parse(savedApplications));
-            }
-        } catch (error) {
-            console.error("Failed to load applications:", error);
+        if (applications.length > 0) {
+            localStorage.setItem("applications", JSON.stringify(applications));
         }
-    }, []);
+    }, [applications]);
+
 
     const handleDelete = (id) => {
-        const updatedApplications = applications.filter((app) => app.id !== id);
-        setApplications(updatedApplications);
-        localStorage.setItem("applications", JSON.stringify(updatedApplications));
-    };
+        console.log(id)
+        dispatch({ type: ACTION_TYPES.DELETE_APPLICATION, id})
+    }
 
     const tableHead = [
         "Company Name",
@@ -42,7 +51,7 @@ export default function Archive() {
 
     return (
         <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Job Applications</h2>
+            <h2 className="text-xl font-bold mb-4">Archived</h2>
             {archivedApplications.length === 0 ? (
                 <p>No archived applications yet.</p>
             ) : (
@@ -57,7 +66,7 @@ export default function Archive() {
                         </thead>
 
                         <tbody>
-                            {applications.map((app) => (
+                            {archivedApplications.map((app) => (
                                 <tr key={app.id} className="odd:bg-green-50 odd:hover:bg-green-200 even:bg-green-100 even:hover:bg-green-200">
                                     <td className="px-4 py-2">{toTitleCase(app.company)}</td>
                                     <td className="px-4 py-2">{toTitleCase(app.position)}</td>

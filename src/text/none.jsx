@@ -1,4 +1,4 @@
-import Status from './Status';
+import Status from '../components/Status';
 import './Input.css'
 
 import { useEffect, useState, useReducer } from "react"
@@ -117,10 +117,10 @@ export default function Input() {
                             </div>
                         )}
                         </button>
-                       
                     </form>
                 </div>
             </div>
+            
 
         </>
     )

@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { ApplicationContext } from "../context/ApplicationContext";
+import { ACTION_TYPES } from "../action-types/actionTypes";
 
 export default function Lists() {
-    const [applications, setApplications] = useState([]);
+    const {state, dispatch} = useContext(ApplicationContext)
+    const { applications } = state
 
     const toTitleCase = (str) => {
         return str
@@ -10,24 +13,21 @@ export default function Lists() {
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
     };
-    
 
     useEffect(() => {
-        try {
-            const savedApplications = localStorage.getItem("applications");
-            if (savedApplications) {
-                setApplications(JSON.parse(savedApplications));
-            }
-        } catch (error) {
-            console.error("Failed to load applications:", error);
+        // Ensure the applications are loaded from localStorage
+        const savedApplications = localStorage.getItem("applications");
+        if (savedApplications && applications.length === 0) {
+            dispatch({
+                type: ACTION_TYPES.LOAD_APPLICATIONS,
+                data: JSON.parse(savedApplications),
+            });
         }
-    }, []);
+    }, [dispatch]);
 
-    const handleDelete = (id) => {
-        const updatedApplications = applications.filter((app) => app.id !== id);
-        setApplications(updatedApplications);
-        localStorage.setItem("applications", JSON.stringify(updatedApplications));
-    };
+    const handleArchive = (id) => {
+        dispatch ({ type: ACTION_TYPES.ARCHIVE_APPLICATION, id})
+    }
 
     const tableHead = [
         "Company Name",
@@ -55,7 +55,9 @@ export default function Lists() {
                         </thead>
 
                         <tbody>
-                            {applications.map((app) => (
+                            {applications
+                            .filter((app) => !app.isArchive)
+                            .map((app) => ( 
                                 <tr key={app.id} className="odd:bg-green-50 odd:hover:bg-green-200 even:bg-green-100 even:hover:bg-green-200">
                                     <td className="px-4 py-2">{toTitleCase(app.company)}</td>
                                     <td className="px-4 py-2">{toTitleCase(app.position)}</td>
@@ -63,7 +65,7 @@ export default function Lists() {
                                     <td className="px-4 py-2">{app.status}</td>
                                     <td className="px-4 py-2">{app.note}</td>
                                     <td className="px-4 py-2">
-                                        <button onClick={() => handleDelete(app.id)}>delete</button>
+                                        <button onClick={() => handleArchive(app.id)}>archive</button>
                                         {/* <button>update</button> */}
                                     </td>
                                 </tr>

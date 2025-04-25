@@ -5,10 +5,9 @@ import './Input.css'
 
 import { useEffect, useReducer, useState} from "react"
 
-
-
 export default function Input() {
-    const [state, dispatch] = useReducer(applicationReducer, initialState )
+
+    const [state, dispatch] = useReducer(applicationReducer, initialState)
     const [showSuccess, setShowSuccess] = useState(false)
 
     const handleInputChange = (field, value) => {
