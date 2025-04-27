@@ -11,6 +11,7 @@ export default {
         colors: {
           offwhite: "#f4f2ee", // Custom color name
         },
+        
       },
     },
     plugins: [

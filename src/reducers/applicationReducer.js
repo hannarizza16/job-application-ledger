@@ -12,7 +12,9 @@ export const initialState = {
         note: "",
         isArchive: false,
     },
-    applications: []
+    applications: [],
+    isDeleteModalOpen: false,
+    deleteTargetId: null,
 }
 
 export function applicationReducer(state, action) {
@@ -58,12 +60,26 @@ export function applicationReducer(state, action) {
                 ...state,
                 applications: action.data
             }
+        case 'OPEN_DELETE_MODAL':
+            return {
+                    ...state,
+                    isDeleteModalOpen: true,
+                    deleteTargetId: action.id
+                }
+        case 'CLOSE_DELETE_MODAL':
+            return{
+                ...state,
+                isDeleteModalOpen: false,
+                deleteTargetId: null,
+            }
         case 'DELETE_APPLICATION':
-            const updatedApplications = state.applications.filter((app) => app.id !== action.id)
+            const updatedApplications = state.applications.filter((app) => app.id !== state.deleteTargetId)
             localStorage.setItem("applications", JSON.stringify(updatedApplications))
             return {
                 ...state,
-                applications: updatedApplications
+                applications: updatedApplications,
+                isDeleteModalOpen: false,
+                deleteTargetId: null,
             }
         case 'ARCHIVE_APPLICATION':
             const archiveApplication = state.applications.map((app) => app.id === action.id ? { ...app, isArchive: true } : app )
@@ -72,6 +88,15 @@ export function applicationReducer(state, action) {
                 ...state,
                 applications: archiveApplication
             }
+        case 'UNARCHIVE_APPLICATION':
+            const unarchiveApplication = state.applications.map((app) => app.id === action.id ? { ...app, isArchive: false } : app )
+            localStorage.setItem("applications", JSON.stringify(unarchiveApplication))
+            console.log(unarchiveApplication)
+            return {
+                ...state,
+                applications: unarchiveApplication
+            }
+
         default:
             return state
     }

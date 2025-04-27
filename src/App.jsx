@@ -4,12 +4,30 @@ import Input from './components/Input'
 
 import Sidebar, { SideBarItem } from './components/Sidebar'
 import { Archive, TextCursorInput, List} from "lucide-react"
-import {Routes, Route} from "react-router-dom"
+import {Routes, Route, useNavigate} from "react-router-dom"
 import { ApplicationProvider } from './context/ApplicationContext'
 
+import { useEffect } from 'react'
+
+
 import './App.css'
+import './components/Input.css'
+
 
 function App() {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const preventBackNav = () => {
+      navigate(1)
+    } 
+
+    window.addEventListener('popstate', preventBackNav)
+
+    return () => {
+      window.addEventListener('popstate', preventBackNav)
+    }
+  }, [navigate])
 
   return (
     
@@ -24,6 +42,7 @@ function App() {
 
         <main className="flex-1 p-4">
           <Routes>
+            <Route path='/' element={<Input/>} />
             <Route path="/input" element={<Input />} />
             <Route path="/lists" element={<Lists/>} />
             <Route path="/archived" element={<Archived />} />

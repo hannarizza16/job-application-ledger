@@ -1,9 +1,9 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { ApplicationContext } from "../context/ApplicationContext";
 import { ACTION_TYPES } from "../action-types/actionTypes";
 
 export default function Lists() {
-    const {state, dispatch} = useContext(ApplicationContext)
+    const {state, dispatch, showSuccess, setShowSuccess} = useContext(ApplicationContext)
     const { applications } = state
 
     const toTitleCase = (str) => {
@@ -15,7 +15,6 @@ export default function Lists() {
     };
 
     useEffect(() => {
-        // Ensure the applications are loaded from localStorage
         const savedApplications = localStorage.getItem("applications");
         if (savedApplications && applications.length === 0) {
             dispatch({
@@ -27,6 +26,8 @@ export default function Lists() {
 
     const handleArchive = (id) => {
         dispatch ({ type: ACTION_TYPES.ARCHIVE_APPLICATION, id})
+        setShowSuccess(true);
+        setTimeout(() => setShowSuccess(false), 3000);
     }
 
     const tableHead = [
@@ -44,9 +45,9 @@ export default function Lists() {
             {applications.length === 0 ? (
                 <p>No applications found.</p>
             ) : (
-                <div>
-                    <table className="w-full">
-                        <thead className="bg-green-300">
+                <div className="overflow-y-auto h-100">
+                    <table className=" w-full">
+                        <thead className="bg-green-300 sticky top-0 z-10">
                             <tr>
                                 {tableHead.map((head, index) => (
                                     <th key={index} className="px-4 py-2 text-left">{head}</th>
@@ -57,21 +58,29 @@ export default function Lists() {
                         <tbody>
                             {applications
                             .filter((app) => !app.isArchive)
-                            .map((app) => ( 
+                            .reverse()
+                            .map((app, index) => ( 
                                 <tr key={app.id} className="odd:bg-green-50 odd:hover:bg-green-200 even:bg-green-100 even:hover:bg-green-200">
-                                    <td className="px-4 py-2">{toTitleCase(app.company)}</td>
+                                    <td className="px-4 py-2">{index+1}. {toTitleCase(app.company)}</td>
                                     <td className="px-4 py-2">{toTitleCase(app.position)}</td>
                                     <td className="px-4 py-2">{app.date}</td>
                                     <td className="px-4 py-2">{app.status}</td>
                                     <td className="px-4 py-2">{app.note}</td>
                                     <td className="px-4 py-2">
-                                        <button onClick={() => handleArchive(app.id)}>archive</button>
-                                        {/* <button>update</button> */}
+                                        <button className="archivedButton" onClick={() => handleArchive(app.id)}>archive</button>
+                                        <button onClick={() => handleArchive(app.id)}>edit</button>
+
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
+                    {
+                            showSuccess && (
+                                <div className="success-message animate-fade-in-out">
+                                    Archived application successfully!
+                                </div>
+                            )}
                 </div>
             )}
         </div>
