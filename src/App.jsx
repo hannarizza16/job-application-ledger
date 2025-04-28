@@ -25,7 +25,7 @@ function App() {
     window.addEventListener('popstate', preventBackNav)
 
     return () => {
-      window.addEventListener('popstate', preventBackNav)
+      window.removeEventListener('popstate', preventBackNav)
     }
   }, [navigate])
 
