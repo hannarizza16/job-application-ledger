@@ -58,7 +58,7 @@ export function applicationReducer(state, action) {
         case 'LOAD_APPLICATIONS':
             return {
                 ...state,
-                applications: action.data
+                applications: action.data || []
             }
         case 'OPEN_DELETE_MODAL':
             return {

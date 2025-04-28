@@ -35,9 +35,14 @@ export default function Input() {
     useEffect(() => {
         try {
             const savedApplications = localStorage.getItem('applications')
+            if (savedApplications && savedApplications !== "undefined" && savedApplications !== "null") {
                 dispatch({type: ACTION_TYPES.LOAD_APPLICATIONS, data: JSON.parse(savedApplications) })
+            } else {
+                dispatch({type: ACTION_TYPES.LOAD_APPLICATIONS, data: [] })
+            }
         } catch (error) {
             console.error("Error loading application from local storage")
+            dispatch({type: ACTION_TYPES.LOAD_APPLICATIONS, data: [] })
         }
     }, [])
     
