@@ -27,7 +27,7 @@ export default function Input() {
     }
 
     useEffect(() => {
-        if(applications.length > 0){
+        if(applications && applications.length > 0){
             localStorage.setItem('applications', JSON.stringify(applications))
         }
     }, [applications])
