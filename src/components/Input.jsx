@@ -26,26 +26,6 @@ export default function Input() {
         setTimeout(() => setShowSuccess(false), 3000);
     }
 
-    useEffect(() => {
-        if(applications && applications.length > 0){
-            localStorage.setItem('applications', JSON.stringify(applications))
-        }
-    }, [applications])
-
-    useEffect(() => {
-        try {
-            const savedApplications = localStorage.getItem('applications')
-            if (savedApplications && savedApplications !== "undefined" && savedApplications !== "null") {
-                dispatch({type: ACTION_TYPES.LOAD_APPLICATIONS, data: JSON.parse(savedApplications) })
-            } else {
-                dispatch({type: ACTION_TYPES.LOAD_APPLICATIONS, data: [] })
-            }
-        } catch (error) {
-            console.error("Error loading application from local storage")
-            dispatch({type: ACTION_TYPES.LOAD_APPLICATIONS, data: [] })
-        }
-    }, [])
-    
 
     const statusOptions = [
         "Applied",

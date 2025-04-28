@@ -50,7 +50,6 @@ export function applicationReducer(state, action) {
                 id: Date.now(),
                 ...state.formData
             }
-
             return {
                 ...state,
                 applications: [...state.applications, newApplication]
