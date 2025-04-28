@@ -24,3 +24,8 @@ Wrapping the child with ApplicationProvider
 
 ## Archived applications that are no longer active
 ![Screeenshot](./src/img/archivedApp.png)
+
+# FUTURE IMPROVEMENTS
+1. add authentication or login feature
+2. edit update the job application 
+3. use database for storing data.
