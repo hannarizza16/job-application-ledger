@@ -67,12 +67,12 @@ export default function Archive() {
 
     return (
         <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Archived</h2>
+            <h2 className="text-xl font-bold mb-4">Archived Applications</h2>
             {archivedApplications.length === 0 ? (
                 <p>No archived applications yet.</p>
             ) : (
                 <div className="overflow-y-auto h-100" >
-                    <table className="w-full overflow-y-auto h-100">
+                    <table className="w-full overflow-y-auto">
                         <thead className="bg-green-300 sticky top-0 z-10">
                             <tr>
                                 {tableHead.map((head, index) => (

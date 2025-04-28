@@ -1,3 +1,7 @@
+# JOB APPLICATION LEDGER
+
+
+# SCREENSHOTS
 ## fetching and updating data in local storage.
 
 ## Migrating from useState to useReducer for a cleaner state handling and separating it in one file.
@@ -11,3 +15,12 @@ Application Context
 
 Wrapping the child with ApplicationProvider
 ![Screenshot](./src/img/wrapping%20.png)
+
+## Input page
+![Screenshot](./src/img/input.png)
+
+## Lists of Job applied for 
+![Screenshot](./src/img/lists.png)  
+
+## Archived applications that are no longer active
+![Screeenshot](./src/img/archivedApp.png)

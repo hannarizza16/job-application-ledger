@@ -41,7 +41,7 @@ export default function Lists() {
 
     return (
         <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Archived Applications</h2>
+            <h2 className="text-xl font-bold mb-4">Job Applications</h2>
             {applications.length === 0 ? (
                 <p>No applications found.</p>
             ) : (
@@ -65,7 +65,11 @@ export default function Lists() {
                                     <td className="px-4 py-2">{toTitleCase(app.position)}</td>
                                     <td className="px-4 py-2">{app.date}</td>
                                     <td className="px-4 py-2">{app.status}</td>
-                                    <td className="px-4 py-2">{app.note}</td>
+                                    <td className="px-4 py-2">
+                                        <div className="note-content">
+                                        {app.note}
+                                        </div>
+                                    </td>
                                     <td className="px-4 py-2">
                                         <button className="archivedButton" onClick={() => handleArchive(app.id)}>archive</button>
                                         <button onClick={() => handleArchive(app.id)}>edit</button>
