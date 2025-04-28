@@ -1,9 +1,9 @@
 export default function Status({applications}) {
 
-    const statusCounts = applications.reduce((acc, app) => {
+    const statusCounts = applications ? applications.reduce((acc, app) => {
         acc[app.status] = (acc[app.status] || 0) + 1;
         return acc;
-    }, {});
+    }, {}) : {};
 
     const statuses = [
         "Applied",

@@ -3,7 +3,7 @@ import { ACTION_TYPES } from '../action-types/actionTypes';
 import { useContext } from 'react';
 import { ApplicationContext } from '../context/ApplicationContext';
 
-import { useEffect, useReducer, useState} from "react"
+import { useEffect } from "react"
 
 export default function Input() {
 
